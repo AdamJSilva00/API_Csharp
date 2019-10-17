@@ -49,5 +49,12 @@ namespace aula1.Controllers
             // Retorno dos dados que é passado por meio da URL 
             return Ok(listaDeUsuarios.FirstOrDefault(rs => rs.id_usuario == id)); 
         }
+
+        [HttpPost("cadastro")]
+        public IActionResult Cadastrar(UsuarioModel usuario){
+            Usuarios();
+            listaDeUsuarios.Add(usuario);
+            return Ok(listaDeUsuarios);
+        }
     }
 }
