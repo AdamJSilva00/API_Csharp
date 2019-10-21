@@ -4,7 +4,7 @@ using aula2.Context;
 using aula2.models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace aula2.Controllers  
+namespace aula2.Controllers
 {
     [ApiController]
     [Route("v1/[controller]")]
@@ -12,9 +12,14 @@ namespace aula2.Controllers
     public class UsuarioController : ControllerBase
     {
         Aula2Context Context = new Aula2Context();
-        
-        [HttpGet]
 
+        /// <summary>
+        ///     Metodo get para listar os usuarios que estão no banco de dados
+        /// </summary>
+        /// <returns>
+        ///     Retorno da lista de todos os usuarios
+        /// </returns>
+        [HttpGet]
         public IActionResult listar()
         {
             List<UsuarioModel> listaDeUsuarios = Context.tbl_usuario.ToList();
@@ -22,7 +27,16 @@ namespace aula2.Controllers
             return Ok(listaDeUsuarios);
         }
 
-        [HttpPost("usuario")]
+        /// <summary>
+        ///     Cadastra um novo usuario no banco de dados 
+        /// </summary>
+        /// <param name="usuario">
+        ///     recebe o usuario para ser cadastrado no banco
+        /// </param>
+        /// <returns>
+        ///     retorna Ok se foi cadastrado
+        /// </returns>
+        [HttpPost]
         public IActionResult Cadastrar(UsuarioModel usuario)
         {
             Context.tbl_usuario.Add(usuario);
@@ -30,17 +44,35 @@ namespace aula2.Controllers
             return Ok();
         }
 
-            [HttpGet("{id}")]
-            public IActionResult BuscarPorId(int id)
+        /// <summary>
+        ///     Metodo para listar o usuario pelo id
+        /// </summary>
+        /// <param name="id">
+        ///     Recebe o id para conseguir selecionar pelo banco
+        /// </param>
+        /// <returns>
+        ///     Retorna o usuario que foi solicitado pela URL
+        /// </returns>
+        [HttpGet("{id}")]
+        public IActionResult BuscarPorId(int id)
         {
             UsuarioModel usuarioRetornado = Context.tbl_usuario.FirstOrDefault(x => x.usuario_id == id);
 
             return Ok(usuarioRetornado);
         }
 
+        /// <summary>
+        ///     Metodo para Excluir o usuario do banco de dados
+        /// </summary>
+        /// <param name="usuario">
+        ///     Parametro usuario serve para localizar o usuario e o excluir
+        /// </param>
+        /// <returns>
+        ///     Retorna Ok se foi excluido com exito
+        /// </returns>
         [HttpPut]
-        
-        public IActionResult Atualizar(UsuarioModel usuario){
+        public IActionResult Atualizar(UsuarioModel usuario)
+        {
             UsuarioModel usuarioRetornadoAntigo = Context.tbl_usuario.FirstOrDefault(x => x.usuario_id == usuario.usuario_id);
             if (usuarioRetornadoAntigo == null)
             {
@@ -60,7 +92,8 @@ namespace aula2.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Deletar(int id){
+        public IActionResult Deletar(int id)
+        {
             UsuarioModel usuarioRetornado = Context.tbl_usuario.FirstOrDefault(x => x.usuario_id == id);
 
             if (usuarioRetornado == null)
