@@ -44,7 +44,7 @@ namespace aula2.Controllers
             UsuarioModel usuarioRetornadoAntigo = Context.tbl_usuario.FirstOrDefault(x => x.usuario_id == usuario.usuario_id);
             if (usuarioRetornadoAntigo == null)
             {
-                
+
                 return NotFound();
             }
 
@@ -56,6 +56,19 @@ namespace aula2.Controllers
             Context.tbl_usuario.Update(usuarioRetornadoAntigo);
             Context.SaveChanges();
 
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id){
+            UsuarioModel usuarioRetornado = Context.tbl_usuario.FirstOrDefault(x => x.usuario_id == id);
+
+            if (usuarioRetornado == null)
+            {
+                return NotFound();
+            }
+            Context.tbl_usuario.Remove(usuarioRetornado);
+            Context.SaveChanges();
             return Ok();
         }
     }
