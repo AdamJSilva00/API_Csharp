@@ -37,5 +37,26 @@ namespace aula2.Controllers
 
             return Ok(usuarioRetornado);
         }
+
+        [HttpPut]
+        
+        public IActionResult Atualizar(UsuarioModel usuario){
+            UsuarioModel usuarioRetornadoAntigo = Context.tbl_usuario.FirstOrDefault(x => x.usuario_id == usuario.usuario_id);
+            if (usuarioRetornadoAntigo == null)
+            {
+                
+                return NotFound();
+            }
+
+            usuarioRetornadoAntigo.usuario_id = usuario.usuario_id;
+            usuarioRetornadoAntigo.usuario_nome = usuario.usuario_nome;
+            usuarioRetornadoAntigo.usuario_email = usuario.usuario_email;
+            usuarioRetornadoAntigo.usuario_senha = usuario.usuario_senha;
+
+            Context.tbl_usuario.Update(usuarioRetornadoAntigo);
+            Context.SaveChanges();
+
+            return Ok();
+        }
     }
 }
