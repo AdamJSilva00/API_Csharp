@@ -21,14 +21,21 @@ namespace aula2.Controllers
 
             return Ok(listaDeUsuarios);
         }
-        [HttpPost("usuario")]
 
+        [HttpPost("usuario")]
         public IActionResult Cadastrar(UsuarioModel usuario)
         {
             Context.tbl_usuario.Add(usuario);
             Context.SaveChanges();
             return Ok();
         }
-        
+
+            [HttpGet("{id}")]
+            public IActionResult BuscarPorId(int id)
+        {
+            UsuarioModel usuarioRetornado = Context.tbl_usuario.FirstOrDefault(x => x.usuario_id == id);
+
+            return Ok(usuarioRetornado);
+        }
     }
 }
