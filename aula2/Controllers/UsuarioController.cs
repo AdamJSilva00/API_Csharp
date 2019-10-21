@@ -21,6 +21,14 @@ namespace aula2.Controllers
 
             return Ok(listaDeUsuarios);
         }
+        [HttpPost("usuario")]
+
+        public IActionResult Cadastrar(UsuarioModel usuario)
+        {
+            Context.tbl_usuario.Add(usuario);
+            Context.SaveChanges();
+            return Ok();
+        }
         
     }
 }
